@@ -7,10 +7,10 @@ namespace ExamStorm.DataManager
 {
     public class RepositoryProvider : IDisposable
     {
-        private readonly ExamContext _dbContext;
+        private readonly ExamDbContext _dbContext;
         private IBaseRepository<UserModel> _userRepository;
 
-        public RepositoryProvider(ExamContext dbContext)
+        public RepositoryProvider(ExamDbContext dbContext)
         {
             this._dbContext = dbContext;
         }

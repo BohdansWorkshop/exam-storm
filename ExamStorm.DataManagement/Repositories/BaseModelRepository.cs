@@ -17,19 +17,19 @@ namespace ExamStorm.DataManager.Repositories
             this.dbSet = this.dbContext.Set<T>();
         }
 
-        public async Task<T> GetModelByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<bool> RemoveModelAsync(T model)
+        public async Task<bool> RemoveAsync(T model)
         {
             var result = false;
             var removalState = dbSet.Remove(model);
             if(removalState.State == EntityState.Deleted)
             {
-                result = true;
                 await this.dbContext.SaveChangesAsync();
+                result = true;
             }
             return result;
         }

@@ -28,7 +28,7 @@ namespace ExamStorm
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddDbContext<ExamContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<ExamDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("ExamStorm")));
             services.AddScoped<RepositoryProvider>();
         }
 

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExamStorm.DataManager
 {
-    public class ExamContext : DbContext
+    public class ExamDbContext : DbContext
     {
-        public ExamContext(DbContextOptions options) : base(options) { }
+        public ExamDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<UserModel> Users { get; set; }
     }
