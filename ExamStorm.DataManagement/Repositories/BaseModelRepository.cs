@@ -8,16 +8,16 @@ namespace ExamStorm.DataManager.Repositories
 {
     public class BaseModelRepository<T> : IBaseRepository<T> where T : BaseModel
     {
-        private readonly DbContext dbContext;
-        private readonly DbSet<T> dbSet;
+        protected DbSet<T> dbSet;
+        protected DbContext dbContext;
 
-        public BaseModelRepository(DbContext dbContext)
+        public BaseModelRepository(ExamDbContext dbContext)
         {
             this.dbContext = dbContext;
             this.dbSet = this.dbContext.Set<T>();
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await dbSet.FindAsync(id);
         }

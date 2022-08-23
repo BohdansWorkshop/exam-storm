@@ -1,5 +1,6 @@
 ﻿using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models;
+using ExamStorm.DataManager.Models.Exam;
 using ExamStorm.DataManager.Repositories;
 using System;
 
@@ -9,21 +10,34 @@ namespace ExamStorm.DataManager
     {
         private readonly ExamDbContext _dbContext;
         private IBaseRepository<UserModel> _userRepository;
+        private IBaseRepository<ExamModel> _examRepository;
 
         public RepositoryProvider(ExamDbContext dbContext)
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public IBaseRepository<UserModel> GetUserRepository
         {
             get
             {
-                if (this._userRepository == null)
+                if (_userRepository == null)
                 {
                     _userRepository = new UserModelRepository(_dbContext);
                 }
-                return this._userRepository;
+                return _userRepository;
+            }
+        }
+
+        public IBaseRepository<ExamModel> GetExamRepository
+        {
+            get
+            {
+                if(_examRepository == null)
+                {
+                    _examRepository = new ExamModelRepository(_dbContext);
+                }
+                return _examRepository;
             }
         }
 

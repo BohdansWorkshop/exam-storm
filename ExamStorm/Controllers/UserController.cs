@@ -13,7 +13,7 @@ namespace ExamStorm.Controllers
     {
         private readonly IBaseRepository<UserModel> _userModelRepository;
 
-        public UserController(ExamDbContext dbContext, RepositoryProvider repositoryProvider)
+        public UserController(ExamDbContext dbContext)
         {
             _userModelRepository = new RepositoryProvider(dbContext).GetUserRepository;
         }
