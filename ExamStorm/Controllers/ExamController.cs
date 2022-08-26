@@ -18,6 +18,14 @@ namespace ExamStorm.Controllers
             _examModelRepository = new RepositoryProvider(dbContext).GetExamRepository;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<ExamModel>> GetUsers(int pageSize = 10, int pageIndex = 0)
+        {
+            var skip = pageIndex > 0 ? pageSize * pageIndex - pageSize : 0;
+            var userModel = await _examModelRepository.Get(skip: skip, take: pageSize);
+            return Ok(userModel);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ExamModel>> GetById(Guid id)
         {
@@ -29,10 +37,22 @@ namespace ExamStorm.Controllers
             return Ok(examModel);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<ExamModel>> Put(ExamModel examModel)
+        [HttpPost("Add")]
+        public async Task<ActionResult<ExamModel>> Add(ExamModel examModel)
         {
-            var res = await _examModelRepository.AddOrUpdateAsync(examModel);
+            var res = await _examModelRepository.AddAsync(examModel);
+            if (res != null)
+            {
+                return Ok(res);
+            }
+            return BadRequest(examModel);
+
+        }
+
+        [HttpPost("Update")]
+        public async Task<ActionResult<ExamModel>> Update(ExamModel examModel)
+        {
+            var res = await _examModelRepository.UpdateAsync(examModel);
             if (res != null)
             {
                 return Ok(res);

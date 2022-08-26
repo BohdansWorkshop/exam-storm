@@ -1,8 +1,12 @@
-﻿using ExamStorm.DataManager;
+﻿using AutoMapper;
+using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models;
+using ExamStorm.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExamStorm.Controllers
@@ -12,10 +16,20 @@ namespace ExamStorm.Controllers
     public class UserController : ControllerBase
     {
         private readonly IBaseRepository<UserModel> _userModelRepository;
+        private readonly IMapper mapper;
 
-        public UserController(ExamDbContext dbContext)
+        public UserController(ExamDbContext dbContext, IMapper mapper)
         {
             _userModelRepository = new RepositoryProvider(dbContext).GetUserRepository;
+            this.mapper = mapper;
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<UserModel>>> GetUsers(int pageSize = 10, int pageIndex = 0)
+        {
+            var skip = pageIndex > 0 ? pageSize * pageIndex - pageSize : 0;
+            var userModels = await _userModelRepository.Get(skip: skip, take: pageSize);
+            var userModelDtos = userModels.Select(x => mapper.Map<UserModelDTO>(x)).ToList();
+            return Ok(userModelDtos);
         }
 
         [HttpGet("{id}")]
@@ -26,19 +40,19 @@ namespace ExamStorm.Controllers
             {
                 return NotFound();
             }
-            return Ok(userModel);
+            return Ok(mapper.Map<UserModelDTO>(userModel));
         }
 
-        [HttpPut]
-        public async Task<ActionResult<UserModel>> Put(UserModel userModel)
+        [HttpPost("Update")]
+        public async Task<ActionResult<UserModelDTO>> Update(UserModelDTO userModelDTO)
         {
-            var res = await _userModelRepository.AddOrUpdateAsync(userModel);
-            if (res != null)
+            var userModel = mapper.Map<UserModel>(userModelDTO);
+            var updatedUserModel = await _userModelRepository.UpdateAsync(userModel);
+            if (updatedUserModel != null)
             {
-                return Ok(res);
+                return Ok(userModelDTO);
             }
-            return BadRequest(userModel);
-
+            return base.BadRequest((object)updatedUserModel);
         }
 
         [HttpDelete("{id}")]
@@ -46,11 +60,7 @@ namespace ExamStorm.Controllers
         {
             var user = await _userModelRepository.GetByIdAsync(id);
             var isRemovedSucessfuly = await _userModelRepository.RemoveAsync(user);
-            if (isRemovedSucessfuly)
-            {
-                return Ok(isRemovedSucessfuly);
-            }
-            return NotFound();
+            return Ok(isRemovedSucessfuly);
         }
     }
 }

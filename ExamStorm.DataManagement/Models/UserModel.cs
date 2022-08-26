@@ -2,6 +2,7 @@
 {
     public class UserModel : BaseModel
     {
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public UserRole Role { get; set; }
@@ -10,7 +11,7 @@
 
     public enum UserRole
     {
-        Common,
-        Moderator
+        Common = 1,
+        Moderator = 2
     }
 }

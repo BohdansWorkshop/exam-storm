@@ -30,6 +30,7 @@ namespace ExamStorm
 
             services.AddDbContext<ExamDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("ExamStorm")));
             services.AddScoped<RepositoryProvider>();
+            services.AddAutoMapper(typeof(ExamStormAutoMapperProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
