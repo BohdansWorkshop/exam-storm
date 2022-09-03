@@ -38,10 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\BaseModel.ts" />
+    <None Remove="ClientApp\src\app\models\ExamModel.ts" />
+    <None Remove="ClientApp\src\app\models\exam\AnswerModel.ts" />
+    <None Remove="ClientApp\src\app\models\exam\QuestionModel.ts" />
     <None Remove="ClientApp\src\app\models\UserModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\models\exam\ExamResultsDTO.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\services\exam.service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\services\user.service.ts" />
   </ItemGroup>
 
@@ -50,11 +56,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\UserModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\models\UserModel.ts" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

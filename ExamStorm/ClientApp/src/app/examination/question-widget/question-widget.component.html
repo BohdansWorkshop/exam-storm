@@ -1,0 +1,43 @@
+<h3>{{exam.title}}</h3>
+
+<mat-card class="container" *ngIf="curQuestionIdx != questions.length else resultsTemplate">
+
+    <mat-card class="question-form-container">
+        <mat-card-content>
+            <h3>{{questions[curQuestionIdx].explanation}}</h3>
+            <li *ngFor="let answer of questions[curQuestionIdx].answers">
+                <span class="choice-container">
+                    <input type="radio" name="answer" (click)="setAnswer(answer);" />
+                    <span>{{answer.description}}</span>
+                </span>
+            </li>
+        </mat-card-content>
+    </mat-card>
+
+    <!--<div *ngIf="quiz && !questions" class="spinner-grow text primary">
+    </div>-->
+    <div class="quiz">
+        <div class="questions">
+            <mat-card-actions align="center">
+                <button mat-raised-button class="btn btn-success" color="primary" [disabled]="questionIdToAnswerMap.size === curQuestionIdx"
+                        (click)="moveToNextQuestion()">
+                    {{curQuestionIdx === questions.length ? 'View results' : 'Next'}}
+                </button>
+            </mat-card-actions>
+
+        </div>
+    </div>
+
+</mat-card>
+
+<ng-template #resultsTemplate>
+    <mat-card class="question-form-container">
+        <mat-card-content>
+            <li *ngFor="let question of questions">
+                <h3>{{question.explanation}}</h3>
+                <h2>Chosen: {{questionIdToAnswerMap.get(question.id).description}}</h2>
+                <h2>Result: {{questionIdToResultMap[question.id]}}</h2>
+            </li>
+        </mat-card-content>
+    </mat-card>
+</ng-template>

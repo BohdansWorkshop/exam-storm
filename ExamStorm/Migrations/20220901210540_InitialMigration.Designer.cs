@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamStorm.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
-    [Migration("20220823203130_InitialMigration")]
+    [Migration("20220901210540_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,28 @@ namespace ExamStorm.Migrations
                 .HasAnnotation("ProductVersion", "3.1.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.AnswerModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
 
             modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.ExamModel", b =>
                 {
@@ -36,28 +58,6 @@ namespace ExamStorm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exams");
-                });
-
-            modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.OptionModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Option")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.QuestionModel", b =>
@@ -105,10 +105,10 @@ namespace ExamStorm.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.OptionModel", b =>
+            modelBuilder.Entity("ExamStorm.DataManager.Models.Exam.AnswerModel", b =>
                 {
                     b.HasOne("ExamStorm.DataManager.Models.Exam.QuestionModel", "Question")
-                        .WithMany("Options")
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionId");
                 });
 

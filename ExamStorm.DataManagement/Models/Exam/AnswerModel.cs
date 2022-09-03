@@ -2,9 +2,9 @@
 
 namespace ExamStorm.DataManager.Models.Exam
 {
-    public class OptionModel : BaseModel
+    public class AnswerModel : BaseModel
     {
-        public string Option { get; set; }
+        public string Description { get; set; }
         public bool IsCorrect { get; set; }
 
         [JsonIgnore]

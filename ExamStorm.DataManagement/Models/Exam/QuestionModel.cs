@@ -9,7 +9,7 @@ namespace ExamStorm.DataManager.Models.Exam
     {
         public string Question { get; set; }
         public string Explanation { get; set; }
-        public List<OptionModel> Options { get; set; }
+        public List<AnswerModel> Answers { get; set; }
 
         [JsonIgnore]
         public ExamModel Exam { get; set; }

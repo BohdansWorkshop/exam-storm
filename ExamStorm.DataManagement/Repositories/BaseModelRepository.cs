@@ -21,7 +21,7 @@ namespace ExamStorm.DataManager.Repositories
         }
 
 
-        public async Task<List<T>> Get(int skip, int take)
+        public virtual async Task<List<T>> Get(int skip, int take)
         {
             return await dbSet
                 .Skip(skip)

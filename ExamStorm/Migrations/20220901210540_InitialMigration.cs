@@ -40,9 +40,9 @@ namespace ExamStorm.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ExamId = table.Column<Guid>(nullable: true),
                     Question = table.Column<string>(nullable: true),
-                    Explanation = table.Column<string>(nullable: true)
+                    Explanation = table.Column<string>(nullable: true),
+                    ExamId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,19 +56,19 @@ namespace ExamStorm.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Options",
+                name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Option = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     IsCorrect = table.Column<bool>(nullable: false),
                     QuestionId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Options", x => x.Id);
+                    table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Options_Questions_QuestionId",
+                        name: "FK_Answers_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
@@ -76,8 +76,8 @@ namespace ExamStorm.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Options_QuestionId",
-                table: "Options",
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
@@ -89,7 +89,7 @@ namespace ExamStorm.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Options");
+                name: "Answers");
 
             migrationBuilder.DropTable(
                 name: "Users");
