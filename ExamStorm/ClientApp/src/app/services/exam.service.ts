@@ -12,8 +12,20 @@ export class ExamService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getExamsRequest() : Observable<ExamModel[]>{
+    getExamsRequest(): Observable<ExamModel[]> {
         return this.httpClient.get<ExamModel[]>(this.ExamControllerURL);
+    }
+
+    postAddNewExamModelRequest(examModel: ExamModel): Observable<ExamModel> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                //Authorization: 'my-auth-token'
+            })
+        };
+
+        const addRequestUrl = `${this.ExamControllerURL}/Add`;
+        return this.httpClient.post<ExamModel>(addRequestUrl, JSON.stringify(examModel, this.replacer), httpOptions);
     }
 
     postUpdateExamRequest(examModel: ExamModel): Observable<ExamModel> {
@@ -44,4 +56,8 @@ export class ExamService {
         return this.httpClient.post<any>(updateRequestUrl, JSON.stringify(examResults.ToJSON()), httpOptions);
     }
 
+    replacer(key, value): any {
+        if (key == "id") return undefined;
+        else return value;
+    }
 }

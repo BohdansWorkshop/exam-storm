@@ -43,7 +43,6 @@ export class QuestionWidgetComponent implements OnInit {
         this.examService.checkExamAnswers(new ExamResultsDTO(this.exam.id, questionIdToAnswerIdMap))
             .subscribe(res => {
                 this.questionIdToResultMap = res;
-                //Object.keys(res).forEach(k => this.questionIdToResultMap.set(k[0], k[1]));
                 console.log(res);
             });
     }

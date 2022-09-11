@@ -3,6 +3,6 @@ import { QuestionModel } from "./QuestionModel";
 
 export class ExamModel extends BaseModel {
     title: string;
-    description: string
-    questions: QuestionModel[];
+    description: string;
+    questions: QuestionModel[] = [];
 }

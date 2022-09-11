@@ -4,7 +4,7 @@
 
     <mat-card class="question-form-container">
         <mat-card-content>
-            <h3>{{questions[curQuestionIdx].explanation}}</h3>
+            <h3>{{questions[curQuestionIdx].explanation}} Exam Results:</h3>
             <li *ngFor="let answer of questions[curQuestionIdx].answers">
                 <span class="choice-container">
                     <input type="radio" name="answer" (click)="setAnswer(answer);" />
@@ -35,7 +35,7 @@
         <mat-card-content>
             <li *ngFor="let question of questions">
                 <h3>{{question.explanation}}</h3>
-                <h2>Chosen: {{questionIdToAnswerMap.get(question.id).description}}</h2>
+                <h2 [ngClass]="questionIdToResultMap[question.id] == true ? 'correct-answer' : 'wrong-answer'">Chosen: {{questionIdToAnswerMap.get(question.id).description}}</h2>
                 <h2>Result: {{questionIdToResultMap[question.id]}}</h2>
             </li>
         </mat-card-content>

@@ -1,6 +1,6 @@
 ﻿export abstract class BaseModel {
-    constructor(id: string) {
+    constructor(id?: string) {
         this.id = id;
     }
-    id: string;
+    id?: string;
 }

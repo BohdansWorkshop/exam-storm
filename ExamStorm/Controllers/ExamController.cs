@@ -1,10 +1,10 @@
-﻿using ExamStorm.DataManager;
+﻿using AutoMapper;
+using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models.Exam;
 using ExamStorm.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,13 +18,15 @@ namespace ExamStorm.Controllers
         private readonly IBaseRepository<ExamModel> _examModelRepository;
         private readonly IBaseRepository<QuestionModel> _questionModelRepository;
         private readonly IBaseRepository<AnswerModel> _answerModelRepository;
+        private readonly IMapper mapper;
 
-        public ExamController(ExamDbContext dbContext)
+        public ExamController(ExamDbContext dbContext, IMapper mapper)
         {
             var repoProvider = new RepositoryProvider(dbContext);
             _examModelRepository = repoProvider.GetExamRepository;
             _questionModelRepository = repoProvider.GetQuestionsRepository;
             _answerModelRepository = repoProvider.GetAnswerRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -75,11 +77,11 @@ namespace ExamStorm.Controllers
         {
             IDictionary<string, bool> questionIdToResultMap = new Dictionary<string, bool>();
             var currentExam = await _examModelRepository.GetByIdAsync(Guid.Parse(examResults.ExamId));
-            foreach (var qIdaId in examResults.QuestionIdToAnswerIdMap)
+            foreach (var questIdAnsId in examResults.QuestionIdToAnswerIdMap)
             {
-                var currentQuestion = currentExam.Questions.FirstOrDefault(q=>q.Id == Guid.Parse(qIdaId.Key));
-                var currentAnswer = currentQuestion.Answers.FirstOrDefault(a => a.Id == Guid.Parse(qIdaId.Value));
-                questionIdToResultMap.Add(qIdaId.Key, currentAnswer.IsCorrect);
+                var currentQuestion = currentExam.Questions.FirstOrDefault(q=>q.Id == Guid.Parse(questIdAnsId.Key));
+                var currentAnswer = currentQuestion.Answers.FirstOrDefault(a => a.Id == Guid.Parse(questIdAnsId.Value));
+                questionIdToResultMap.Add(questIdAnsId.Key, currentAnswer.IsCorrect);
             }
             return Ok(questionIdToResultMap);
         }
@@ -93,9 +95,9 @@ namespace ExamStorm.Controllers
             {
                 foreach (var answer in question.Answers)
                 {
-                    await _answerModelRepository.RemoveAsync(answer);
+                     _answerModelRepository.RemoveAsync(answer);
                 }
-                await _questionModelRepository.RemoveAsync(question);
+                 _questionModelRepository.RemoveAsync(question);
             }
 
             var isRemovedSucessfuly = await _examModelRepository.RemoveAsync(exam);

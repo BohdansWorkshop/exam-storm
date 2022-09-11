@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\admin-dashboard\modals\new-exam\new-exam-modal.component.ts" />
     <None Remove="ClientApp\src\app\models\BaseModel.ts" />
     <None Remove="ClientApp\src\app\models\ExamModel.ts" />
     <None Remove="ClientApp\src\app\models\exam\AnswerModel.ts" />

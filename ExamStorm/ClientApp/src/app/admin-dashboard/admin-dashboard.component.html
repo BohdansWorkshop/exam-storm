@@ -52,9 +52,35 @@
 
 <ng-template #examsPanel>
     <div id="exam-panel">
-        <h1>exam panel hia</h1>
+        <table class="table" *ngIf="examModels.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Questions</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let exam of examModels">
+                <tr>
+                    <td>
+                        {{exam.title}}
+                    </td>
+                    <td>
+                        {{exam.description}}
+                    </td>
+                    <td>
+                        {{exam.questions.length}}
+                    </td>
+                    <td>
+                        <button mat-button color="primary" (click)="startEditExam(exam)">Edit</button>
+                        <button mat-button color="warn" (click)="removeExam(exam)">Remove</button>
+                    </td>
+                </tr>
+        </table>
+        <button mat-button color="primary" (click)="openNewExamDialog()">Create</button>
     </div>
 </ng-template>
+
 
 <mat-tab-group>
     <mat-tab label="Users">

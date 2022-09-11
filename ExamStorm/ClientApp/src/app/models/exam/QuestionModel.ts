@@ -2,6 +2,7 @@
 import { AnswerModel } from "./AnswerModel";
 
 export class QuestionModel extends BaseModel {
-    description: string;
-    answers: AnswerModel[];
+    question: string;
+    explanation: string;
+    answers: AnswerModel[] = [];
 }

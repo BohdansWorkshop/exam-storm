@@ -11,10 +11,11 @@ import { CounterComponent } from './counter/counter.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { UserService } from './services/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
 import { ExaminationComponent } from './examination/examination.component';
 import { QuestionWidgetComponent } from './examination/question-widget/question-widget.component';
 import { ExamService } from './services/exam.service';
+import { NewExamModalComponent } from './admin-dashboard/modals/new-exam/new-exam-modal.component';
 
 @NgModule({
     declarations: [
@@ -24,8 +25,10 @@ import { ExamService } from './services/exam.service';
         CounterComponent,
         AdminDashboardComponent,
         ExaminationComponent,
-        QuestionWidgetComponent
+        QuestionWidgetComponent,
+        NewExamModalComponent
     ],
+    entryComponents: [NewExamModalComponent],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
@@ -42,7 +45,8 @@ import { ExamService } from './services/exam.service';
         MatCardModule,
         MatGridListModule,
         BrowserAnimationsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatDialogModule
     ],
     providers: [UserService, ExamService],
     bootstrap: [AppComponent]

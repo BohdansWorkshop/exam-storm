@@ -2,5 +2,5 @@
 
 export class AnswerModel extends BaseModel {
     description: string;
-    isCorrect: boolean;
+    isCorrect: boolean = false;
 }
