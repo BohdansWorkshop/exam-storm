@@ -1,0 +1,48 @@
+
+<table class="table" *ngIf="userModels.length > 0">
+    <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Role</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let user of userModels">
+        <tr *ngIf="!editingCache.has(user.id) else editModeRow">
+            <td>
+                {{user.firstName}}
+            </td>
+            <td>
+                {{user.lastName}}
+            </td>
+            <td>
+                {{user.role}}
+            </td>
+            <td>
+                <button mat-button color="primary" (click)="startEditUser(user)">Edit</button>
+                <button mat-button color="warn" (click)="removeUser(user)">Remove</button>
+            </td>
+        </tr>
+
+        <ng-template #editModeRow>
+            <tr>
+                <td>
+                    <input type="text" [(ngModel)]="editingCache.get(user.id).firstName" value="{{editingCache.get(user.id).firstName}}" />
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="editingCache.get(user.id).lastName" value="{{editingCache.get(user.id).lastName}}" />
+                </td>
+                <td>
+                    <select [(ngModel)]="editingCache.get(user.id).role">
+                        <option value="Common">Common</option>
+                        <option value="Moderator">Moderator</option>
+                    </select>
+                </td>
+                <td>
+                    <button mat-button color="primary" (click)="updateUser(editingCache.get(user.id))">Save</button>
+                    <button mat-button color="warn" (click)="exitEditMode(user.id)">Cancel</button>
+                </td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

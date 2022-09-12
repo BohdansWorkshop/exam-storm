@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ExamStorm.DataManager;
+﻿using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models.Exam;
 using ExamStorm.ModelsDTO;
@@ -18,15 +17,13 @@ namespace ExamStorm.Controllers
         private readonly IBaseRepository<ExamModel> _examModelRepository;
         private readonly IBaseRepository<QuestionModel> _questionModelRepository;
         private readonly IBaseRepository<AnswerModel> _answerModelRepository;
-        private readonly IMapper mapper;
 
-        public ExamController(ExamDbContext dbContext, IMapper mapper)
+        public ExamController(ExamDbContext dbContext)
         {
             var repoProvider = new RepositoryProvider(dbContext);
             _examModelRepository = repoProvider.GetExamRepository;
             _questionModelRepository = repoProvider.GetQuestionsRepository;
             _answerModelRepository = repoProvider.GetAnswerRepository;
-            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -79,7 +76,7 @@ namespace ExamStorm.Controllers
             var currentExam = await _examModelRepository.GetByIdAsync(Guid.Parse(examResults.ExamId));
             foreach (var questIdAnsId in examResults.QuestionIdToAnswerIdMap)
             {
-                var currentQuestion = currentExam.Questions.FirstOrDefault(q=>q.Id == Guid.Parse(questIdAnsId.Key));
+                var currentQuestion = currentExam.Questions.FirstOrDefault(q => q.Id == Guid.Parse(questIdAnsId.Key));
                 var currentAnswer = currentQuestion.Answers.FirstOrDefault(a => a.Id == Guid.Parse(questIdAnsId.Value));
                 questionIdToResultMap.Add(questIdAnsId.Key, currentAnswer.IsCorrect);
             }
@@ -95,9 +92,9 @@ namespace ExamStorm.Controllers
             {
                 foreach (var answer in question.Answers)
                 {
-                     _answerModelRepository.RemoveAsync(answer);
+                    _answerModelRepository.RemoveAsync(answer);
                 }
-                 _questionModelRepository.RemoveAsync(question);
+                _questionModelRepository.RemoveAsync(question);
             }
 
             var isRemovedSucessfuly = await _examModelRepository.RemoveAsync(exam);

@@ -56,8 +56,7 @@ export class ExamService {
         return this.httpClient.post<any>(updateRequestUrl, JSON.stringify(examResults.ToJSON()), httpOptions);
     }
 
-    replacer(key, value): any {
-        if (key == "id") return undefined;
-        else return value;
+    private replacer(key, value): any {
+        return key == "id" ? undefined : value;
     }
 }

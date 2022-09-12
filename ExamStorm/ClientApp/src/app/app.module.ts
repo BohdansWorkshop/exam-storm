@@ -16,6 +16,8 @@ import { ExaminationComponent } from './examination/examination.component';
 import { QuestionWidgetComponent } from './examination/question-widget/question-widget.component';
 import { ExamService } from './services/exam.service';
 import { NewExamModalComponent } from './admin-dashboard/modals/new-exam/new-exam-modal.component';
+import { UsersManagementPanelComponent } from './admin-dashboard/users-management-panel/users-management-panel.component';
+import { ExamsManagementPanelComponent } from './admin-dashboard/exams-management-panel/exams-management-panel.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,9 @@ import { NewExamModalComponent } from './admin-dashboard/modals/new-exam/new-exa
         AdminDashboardComponent,
         ExaminationComponent,
         QuestionWidgetComponent,
-        NewExamModalComponent
+        NewExamModalComponent,
+        UsersManagementPanelComponent,
+        ExamsManagementPanelComponent
     ],
     entryComponents: [NewExamModalComponent],
     imports: [
