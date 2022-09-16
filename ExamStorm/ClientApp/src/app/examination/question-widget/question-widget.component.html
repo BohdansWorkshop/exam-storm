@@ -1,10 +1,12 @@
-<h3>{{exam.title}}</h3>
 
-<mat-card class="container" *ngIf="curQuestionIdx != questions.length else resultsTemplate">
+<div class="container">
+    <h3>{{exam.title}}: <span *ngIf="!this.isFinishedTest">{{timeLeft}}</span></h3>
+</div>
 
+<mat-card class="container" *ngIf="!isFinishedTest else resultsTemplate">
     <mat-card class="question-form-container">
         <mat-card-content>
-            <h3>{{questions[curQuestionIdx].explanation}} Exam Results:</h3>
+            <h3>{{questions[curQuestionIdx].question}}:</h3>
             <li *ngFor="let answer of questions[curQuestionIdx].answers">
                 <span class="choice-container">
                     <input type="radio" name="answer" (click)="setAnswer(answer);" />
@@ -14,8 +16,6 @@
         </mat-card-content>
     </mat-card>
 
-    <!--<div *ngIf="quiz && !questions" class="spinner-grow text primary">
-    </div>-->
     <div class="quiz">
         <div class="questions">
             <mat-card-actions align="center">
@@ -27,17 +27,8 @@
 
         </div>
     </div>
-
 </mat-card>
 
 <ng-template #resultsTemplate>
-    <mat-card class="question-form-container">
-        <mat-card-content>
-            <li *ngFor="let question of questions">
-                <h3>{{question.explanation}}</h3>
-                <h2 [ngClass]="questionIdToResultMap[question.id] == true ? 'correct-answer' : 'wrong-answer'">Chosen: {{questionIdToAnswerMap.get(question.id).description}}</h2>
-                <h2>Result: {{questionIdToResultMap[question.id]}}</h2>
-            </li>
-        </mat-card-content>
-    </mat-card>
+    <summary-widget [exam]="exam" [questionIdToAnswerMap]="questionIdToAnswerMap"></summary-widget>
 </ng-template>

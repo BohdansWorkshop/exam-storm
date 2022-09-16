@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ExamStorm.DataManager.Models.Exam
 {
@@ -8,6 +6,7 @@ namespace ExamStorm.DataManager.Models.Exam
     {
         public string Title { get; set; }
         public string Description { get; set; }
+        public int TimeInSeconds { get; set; }
         public List<QuestionModel> Questions { get; set; }
     }
 }

@@ -18,6 +18,7 @@ import { ExamService } from './services/exam.service';
 import { NewExamModalComponent } from './admin-dashboard/modals/new-exam/new-exam-modal.component';
 import { UsersManagementPanelComponent } from './admin-dashboard/users-management-panel/users-management-panel.component';
 import { ExamsManagementPanelComponent } from './admin-dashboard/exams-management-panel/exams-management-panel.component';
+import { SummaryWidgetComponent } from './examination/summary-widget/summary-widget.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { ExamsManagementPanelComponent } from './admin-dashboard/exams-managemen
         QuestionWidgetComponent,
         NewExamModalComponent,
         UsersManagementPanelComponent,
-        ExamsManagementPanelComponent
+        ExamsManagementPanelComponent,
+        SummaryWidgetComponent
     ],
     entryComponents: [NewExamModalComponent],
     imports: [
@@ -50,7 +52,8 @@ import { ExamsManagementPanelComponent } from './admin-dashboard/exams-managemen
         MatGridListModule,
         BrowserAnimationsModule,
         MatProgressSpinnerModule,
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule
     ],
     providers: [UserService, ExamService],
     bootstrap: [AppComponent]

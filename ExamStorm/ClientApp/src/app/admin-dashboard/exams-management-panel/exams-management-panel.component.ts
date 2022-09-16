@@ -24,7 +24,7 @@ export class ExamsManagementPanelComponent implements OnInit {
 
     openNewExamDialog(): void {
         const config = new MatDialogConfig();
-        config.width = "500px";
+        config.width = "80vh";
         config.autoFocus = true;
 
         const openedDialogRef = this.dialog.open(NewExamModalComponent, config);
@@ -37,7 +37,7 @@ export class ExamsManagementPanelComponent implements OnInit {
 
     startEditExam(examModel: ExamModel) {
         const config = new MatDialogConfig();
-        config.width = "500px";
+        config.width = "80vh";
         config.autoFocus = true;
         config.data = {
             examModel: examModel

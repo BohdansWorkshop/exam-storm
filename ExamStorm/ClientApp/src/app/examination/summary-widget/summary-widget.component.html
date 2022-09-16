@@ -1,0 +1,15 @@
+<mat-card class="question-form-container">
+    <p>
+        RESULTS: {{correctAnswersAmount}}/{{exam.questions.length}}
+    </p>
+    <mat-card-content>
+        <li *ngFor="let question of exam.questions; let i = index">
+            <div class="question-summary">
+                <h3> {{i + 1}}.{{question.question}}</h3>
+                <h3 [ngClass]="questionIdToResultMap[question.id] ? 'correct-answer' : 'wrong-answer'">
+                    {{questionIdToAnswerMap.get(question.id).description}}: {{question.explanation}}
+                </h3>
+            </div>
+        </li>
+    </mat-card-content>
+</mat-card>

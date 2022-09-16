@@ -1,0 +1,12 @@
+
+li {
+    list-style: none;
+}
+
+.correct-answer {
+    background-color: green;
+}
+
+.wrong-answer {
+    background-color: red;
+}

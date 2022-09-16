@@ -17,7 +17,7 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button color="primary" (click)="startExam(exam);">Start</button>
+                    <button mat-button color="primary" (click)="startExam(exam)">Start</button>
                 </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
@@ -25,5 +25,5 @@
 </mat-grid-list>
 
 <ng-template #questionsTemplate>
-    <app-question-widget [exam]="startedExam" [examService]="examService"></app-question-widget>
+    <app-question-widget [exam]="startedExam"></app-question-widget>
 </ng-template>

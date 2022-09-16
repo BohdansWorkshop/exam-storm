@@ -12,38 +12,42 @@ import { ExamService } from '../../services/exam.service';
 })
 export class QuestionWidgetComponent implements OnInit {
     @Input() exam: ExamModel;
-    @Input() examService: ExamService;
 
     questionIdToAnswerMap: Map<string, AnswerModel> = new Map<string, AnswerModel>();
-    questionIdToResultMap: Map<string, boolean> = new Map<string, boolean>();
+    correctAnswersAmount: number = 0;
+    timeLeft: number;
 
-    questions: QuestionModel[];
+    questions: QuestionModel[]
     curQuestionIdx: number = 0;
+    isFinishedTest: boolean;
 
     ngOnInit() {
         this.questions = this.exam.questions;
+
+        if (this.exam.timeInSeconds > 0) {
+            this.timeLeft = this.exam.timeInSeconds;
+            this.startTimer();
+        }
     }
 
     setAnswer(answer: AnswerModel) {
         this.questionIdToAnswerMap.set(this.questions[this.curQuestionIdx].id, answer);
     }
 
-    moveToNextQuestion(id: string) {
+    moveToNextQuestion() {
         this.curQuestionIdx++;
         if (this.curQuestionIdx == this.questions.length) {
-            this.showResult();
+            this.isFinishedTest = true;
         }
     }
 
-    showResult() {
-        const questionIdToAnswerIdMap = new Map<string, string>();
-        this.questionIdToAnswerMap.forEach((value: AnswerModel, key: string) => {
-            questionIdToAnswerIdMap.set(key, value.id);
-        });
-        this.examService.checkExamAnswers(new ExamResultsDTO(this.exam.id, questionIdToAnswerIdMap))
-            .subscribe(res => {
-                this.questionIdToResultMap = res;
-                console.log(res);
-            });
+    private startTimer() {
+        setInterval(() => {
+            if (this.timeLeft > 0) {
+                this.timeLeft--;
+            } else {
+                this.isFinishedTest = true;
+            }
+        }, 1000);
     }
 }

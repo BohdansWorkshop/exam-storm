@@ -21,11 +21,3 @@ li {
 input {
     margin-right: 10px;
 }
-
-.correct-answer {
-    background-color: green;
-}
-
-.wrong-answer {
-    background-color: red;
-}

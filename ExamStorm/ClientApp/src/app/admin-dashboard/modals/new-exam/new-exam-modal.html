@@ -1,25 +1,39 @@
-<h3> Name: </h3>
-<input type="text" [(ngModel)]="model.title" />
-<h3> Description: </h3>
-<input type="text" [(ngModel)]="model.description" />
+<mat-dialog-content>
+    <div class="new-exam">
+        <p>
+            Name: <input type="text" [(ngModel)]="model.title" />
+        </p>
+        <p>
+            Description:
+            <input type="text" [(ngModel)]="model.description" />
+        </p>
+        <p>
+            Time in seconds:
+            <span>(leave blank if not necessary)</span>
+            <input type="number" [(ngModel)]="model.timeInSeconds" />
+        </p>
+        <h3>Questions</h3>
+        <div *ngFor="let questionModel of model.questions">
+            <p>
+                Question text:
+                <input type="text" [(ngModel)]="questionModel.question" />
+            </p>
+            <p>
+                Explanation:
+                <input type="text" [(ngModel)]="questionModel.explanation" />
+            </p>
+            <div *ngFor="let answer of questionModel.answers">
+                Answer:
+                <input type="text" [(ngModel)]="answer.description" />
+                <input type="checkbox"
+                       [(ngModel)]="answer.isCorrect"
+                       [ngModelOptions]="{standalone: true}" />
+                <span>Correct</span>
+            </div>
+            <button (click)="addAnswer(questionModel)">Add answer</button>
+        </div>
 
-<h3>Questions</h3>
-<div *ngFor="let questionModel of model.questions">
-    Question text:
-    <input type="text" [(ngModel)]="questionModel.question" />
-    Explanation:
-    <input type="text" [(ngModel)]="questionModel.explanation" />
-    <div *ngFor="let answer of questionModel.answers">
-        Answer description:
-        <input type="text" [(ngModel)]="answer.description" />
-        <input type="checkbox"
-               [(ngModel)]="answer.isCorrect"
-               [ngModelOptions]="{standalone: true}" /> `
+        <button (click)="addQuestion()">Add question</button>
+        <button (click)="createNewExam()">{{isEditMode ? "Save" : "Create"}}</button>
     </div>
-    <button (click)="addAnswer(questionModel)">Add answer</button>
-</div>
-
-<button (click)="addQuestion()">Add question</button>
-<button (click)="createNewExam()">{{isEditMode ? "Save" : "Create"}}</button>
-
-
+</mat-dialog-content>
