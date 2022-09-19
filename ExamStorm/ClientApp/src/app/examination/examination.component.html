@@ -1,28 +1,12 @@
-
-<mat-grid-list *ngIf="startedExam==null else questionsTemplate" cols="2" rowHeight="2:1">
-    <div *ngFor="let exam of exams">
-        <mat-grid-tile>
-            <mat-card class="example-card">
-                <mat-spinner *ngIf="exams.length < 1 | async"></mat-spinner>
-                <mat-card-header>
-                    <mat-card-title>{{exam.title}}</mat-card-title>
-                </mat-card-header>
-                <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
-                <mat-card-content>
-                    <p>
-                        {{exam.description}}
-                    </p>
-                    <p>
-                        {{exam.questions.length}} questions
-                    </p>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button color="primary" (click)="startExam(exam)">Start</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-    </div>
-</mat-grid-list>
+<mat-list *ngIf="startedExam==null else questionsTemplate">
+    <mat-card class="exam-card" *ngFor="let exam of exams">
+        <mat-card-title>{{exam.title}}</mat-card-title>
+        <mat-card-content>
+            {{exam.description}} - {{exam.questions.length}} questions
+        </mat-card-content>
+        <button mat-button color="primary" (click)="startExam(exam)">Start</button>
+    </mat-card>
+</mat-list>
 
 <ng-template #questionsTemplate>
     <app-question-widget [exam]="startedExam"></app-question-widget>

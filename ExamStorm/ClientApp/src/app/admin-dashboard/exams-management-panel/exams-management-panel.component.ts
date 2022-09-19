@@ -30,7 +30,7 @@ export class ExamsManagementPanelComponent implements OnInit {
         const openedDialogRef = this.dialog.open(NewExamModalComponent, config);
         openedDialogRef.afterClosed().subscribe((newExamModel: ExamModel) => {
             this.examService.postAddNewExamModelRequest(newExamModel).subscribe((res: ExamModel) => {
-                console.log(res);
+                this.examModels.push(res);
             })
         });
     }

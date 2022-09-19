@@ -11,7 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { UserService } from './services/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatGridListModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
 import { ExaminationComponent } from './examination/examination.component';
 import { QuestionWidgetComponent } from './examination/question-widget/question-widget.component';
 import { ExamService } from './services/exam.service';
@@ -49,7 +49,7 @@ import { SummaryWidgetComponent } from './examination/summary-widget/summary-wid
         MatButtonModule,
         MatInputModule,
         MatCardModule,
-        MatGridListModule,
+        MatListModule,
         BrowserAnimationsModule,
         MatProgressSpinnerModule,
         MatDialogModule,
