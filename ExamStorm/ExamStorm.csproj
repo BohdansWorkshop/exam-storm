@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.29" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.28">
       <PrivateAssets>all</PrivateAssets>
@@ -38,15 +40,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\admin-dashboard\modals\new-exam\new-exam-modal.component.ts" />
+    <None Remove="ClientApp\src\app\components\admin-dashboard\modals\new-exam\new-exam-modal.component.ts" />
     <None Remove="ClientApp\src\app\models\BaseModel.ts" />
     <None Remove="ClientApp\src\app\models\ExamModel.ts" />
     <None Remove="ClientApp\src\app\models\exam\AnswerModel.ts" />
     <None Remove="ClientApp\src\app\models\exam\QuestionModel.ts" />
+    <None Remove="ClientApp\src\app\models\LoginModel.ts" />
     <None Remove="ClientApp\src\app\models\UserModel.ts" />
+    <None Remove="ClientApp\src\app\services\account.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\models\auth\UserAuthInfoModel.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\models\exam\ExamResultsDTO.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\services\exam.service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\services\user.service.ts" />

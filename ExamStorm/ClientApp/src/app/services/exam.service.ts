@@ -8,7 +8,7 @@ import { ExamResultsDTO } from "../models/exam/ExamResultsDTO";
     providedIn: 'root'
 })
 export class ExamService {
-    readonly ExamControllerURL: string = "https://localhost:44308/api/exam";
+    private readonly ExamControllerURL: string = "https://localhost:44308/api/exam";
 
     constructor(private httpClient: HttpClient) { }
 
@@ -48,7 +48,6 @@ export class ExamService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                //Authorization: 'my-auth-token'
             })
         };
 

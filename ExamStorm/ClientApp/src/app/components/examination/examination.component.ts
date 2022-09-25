@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamModel } from '../models/exam/ExamModel';
-import { ExamService } from '../services/exam.service';
+import { ExamModel } from '../../models/exam/ExamModel';
+import { ExamService } from '../../services/exam.service';
 
 @Component({
     selector: 'app-examination',

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ExamStorm.ModelsDTO
+namespace ExamStorm.Models.DTO
 {
     public class ExamResultsDTO
     {

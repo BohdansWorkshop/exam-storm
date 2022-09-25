@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AnswerModel } from '../../models/exam/AnswerModel';
-import { ExamModel } from '../../models/exam/ExamModel';
-import { ExamResultsDTO } from '../../models/exam/ExamResultsDTO';
-import { ExamService } from '../../services/exam.service';
+import { AnswerModel } from '../../../models/exam/AnswerModel';
+import { ExamModel } from '../../../models/exam/ExamModel';
+import { ExamResultsDTO } from '../../../models/exam/ExamResultsDTO';
+import { ExamService } from '../../../services/exam.service';
 
 @Component({
     selector: 'summary-widget',

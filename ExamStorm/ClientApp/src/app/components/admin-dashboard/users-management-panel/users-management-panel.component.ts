@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserModel } from '../../models/UserModel';
-import { UserService } from '../../services/user.service';
+import { UserModel } from '../../../models/UserModel';
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'users-management-panel',
@@ -22,7 +22,7 @@ export class UsersManagementPanelComponent implements OnInit {
     }
 
     startEditUser(user: UserModel) {
-        this.usersEditingCache.set(user.id, new UserModel(user.id, user.firstName, user.lastName, user.role));
+        this.usersEditingCache.set(user.id, new UserModel(user.id, user.email, user.firstName, user.lastName, user.role));
     }
 
     exitEditMode(userId: string) {

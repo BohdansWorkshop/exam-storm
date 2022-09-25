@@ -1,24 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { UserService } from './services/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
-import { ExaminationComponent } from './examination/examination.component';
-import { QuestionWidgetComponent } from './examination/question-widget/question-widget.component';
 import { ExamService } from './services/exam.service';
-import { NewExamModalComponent } from './admin-dashboard/modals/new-exam/new-exam-modal.component';
-import { UsersManagementPanelComponent } from './admin-dashboard/users-management-panel/users-management-panel.component';
-import { ExamsManagementPanelComponent } from './admin-dashboard/exams-management-panel/exams-management-panel.component';
-import { SummaryWidgetComponent } from './examination/summary-widget/summary-widget.component';
+import { AccountService } from './services/account.service';
+import { ExaminationComponent } from './components/examination/examination.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { QuestionWidgetComponent } from './components/examination/question-widget/question-widget.component';
+import { UsersManagementPanelComponent } from './components/admin-dashboard/users-management-panel/users-management-panel.component';
+import { NewExamModalComponent } from './components/admin-dashboard/modals/new-exam/new-exam-modal.component';
+import { ExamsManagementPanelComponent } from './components/admin-dashboard/exams-management-panel/exams-management-panel.component';
+import { SummaryWidgetComponent } from './components/examination/summary-widget/summary-widget.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,8 @@ import { SummaryWidgetComponent } from './examination/summary-widget/summary-wid
         NewExamModalComponent,
         UsersManagementPanelComponent,
         ExamsManagementPanelComponent,
-        SummaryWidgetComponent
+        SummaryWidgetComponent,
+        UserProfileComponent
     ],
     entryComponents: [NewExamModalComponent],
     imports: [
@@ -44,6 +47,7 @@ import { SummaryWidgetComponent } from './examination/summary-widget/summary-wid
             { path: 'counter', component: CounterComponent },
             { path: 'admin-dashboard', component: AdminDashboardComponent },
             { path: 'examination', component: ExaminationComponent },
+            { path: 'profile', component: UserProfileComponent },
         ]),
         MatTabsModule,
         MatButtonModule,
@@ -53,9 +57,10 @@ import { SummaryWidgetComponent } from './examination/summary-widget/summary-wid
         BrowserAnimationsModule,
         MatProgressSpinnerModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        ReactiveFormsModule
     ],
-    providers: [UserService, ExamService],
+    providers: [AccountService, UserService, ExamService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

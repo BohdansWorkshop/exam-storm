@@ -29,13 +29,9 @@ namespace ExamStorm.DataManager.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<T>> Get(int skip, int take, Expression<Func<T, bool>> query)
+        public async Task<T> GetOneWhere(Expression<Func<T, bool>> query)
         {
-            return await dbSet
-                .Skip(skip)
-                .Take(take)
-                .Where(query)
-                .ToListAsync();
+            return await dbSet.FirstOrDefaultAsync(query);
         }
 
         public virtual async Task<T> GetByIdAsync(Guid id)

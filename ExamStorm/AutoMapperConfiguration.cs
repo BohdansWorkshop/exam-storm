@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ExamStorm.DataManager.Models;
-using ExamStorm.ModelsDTO;
+using ExamStorm.Models.DTO;
 
 namespace ExamStorm
 {

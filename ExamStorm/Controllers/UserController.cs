@@ -2,7 +2,7 @@
 using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models;
-using ExamStorm.ModelsDTO;
+using ExamStorm.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

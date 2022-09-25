@@ -1,8 +1,8 @@
 ﻿import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { AnswerModel } from "../../../models/exam/AnswerModel";
-import { ExamModel } from "../../../models/exam/ExamModel";
-import { QuestionModel } from "../../../models/exam/QuestionModel";
+import { AnswerModel } from "../../../../models/exam/AnswerModel";
+import { ExamModel } from "../../../../models/exam/ExamModel";
+import { QuestionModel } from "../../../../models/exam/QuestionModel";
 
 @Component({
     selector: 'new-exam-modal',
