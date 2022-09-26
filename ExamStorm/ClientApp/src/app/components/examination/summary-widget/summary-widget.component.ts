@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AnswerModel } from '../../../models/exam/AnswerModel';
 import { ExamModel } from '../../../models/exam/ExamModel';
-import { ExamResultsDTO } from '../../../models/exam/ExamResultsDTO';
+import { ExamSummaryDTO } from '../../../models/exam/ExamSummaryDTO';
 import { ExamService } from '../../../services/exam.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class SummaryWidgetComponent implements OnInit {
             questionIdToAnswerIdMap.set(key, value.id);
         });
 
-        this.examService.checkExamAnswers(new ExamResultsDTO(this.exam.id, questionIdToAnswerIdMap))
+        this.examService.checkExamAnswers(new ExamSummaryDTO(this.exam.id, questionIdToAnswerIdMap))
             .subscribe((res: Map<string, boolean>) => {
                 this.questionIdToResultMap = res;
                 this.countCorrectAnswers();

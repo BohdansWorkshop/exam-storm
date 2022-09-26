@@ -1,4 +1,5 @@
 ﻿using ExamStorm.DataManager.Models;
+using System.Collections.Generic;
 
 namespace ExamStorm.Models.DTO
 {
@@ -9,5 +10,6 @@ namespace ExamStorm.Models.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
+        List<ExamResultModel> ExamResults { get; set; }
     }
 }

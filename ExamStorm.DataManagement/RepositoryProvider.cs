@@ -13,6 +13,7 @@ namespace ExamStorm.DataManager
         private IBaseRepository<ExamModel> _examRepository;
         private IBaseRepository<QuestionModel> _questionRepository;
         private IBaseRepository<AnswerModel> _answerRepository;
+        private IBaseRepository<ExamResultModel> _examResultModelRepository;
 
         public RepositoryProvider(ExamDbContext dbContext)
         {
@@ -64,6 +65,18 @@ namespace ExamStorm.DataManager
                     _answerRepository = new AnswerModelRepository(_dbContext);
                 }
                 return _answerRepository;
+            }
+        }
+
+        public IBaseRepository<ExamResultModel> GetExamResultRepository
+        {
+            get
+            {
+                if (_examResultModelRepository == null)
+                {
+                    _examResultModelRepository = new ExamResultModelRepository(_dbContext);
+                }
+                return _examResultModelRepository;
             }
         }
 

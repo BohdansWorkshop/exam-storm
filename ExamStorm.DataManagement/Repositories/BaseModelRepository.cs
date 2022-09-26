@@ -20,7 +20,6 @@ namespace ExamStorm.DataManager.Repositories
             this.dbSet = this.dbContext.Set<T>();
         }
 
-
         public virtual async Task<List<T>> Get(int skip, int take)
         {
             return await dbSet
@@ -28,8 +27,13 @@ namespace ExamStorm.DataManager.Repositories
                 .Take(take)
                 .ToListAsync();
         }
+   
+        public virtual async Task<List<T>> GetWhereAsync(Expression<Func<T, bool>> query)
+        {
+            return await dbSet.Where(query).ToListAsync();
+        }
 
-        public async Task<T> GetOneWhere(Expression<Func<T, bool>> query)
+        public virtual async Task<T> GetOneWhereAsync(Expression<Func<T, bool>> query)
         {
             return await dbSet.FirstOrDefaultAsync(query);
         }
@@ -39,7 +43,14 @@ namespace ExamStorm.DataManager.Repositories
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<bool> RemoveAsync(T model)
+        public virtual async Task<T> UpdateAsync(T model)
+        {
+            dbSet.Update(model);
+            await dbContext.SaveChangesAsync();
+            return model;
+        }
+
+        public virtual async Task<bool> RemoveAsync(T model)
         {
             var result = false;
             var removalState = dbSet.Remove(model);
@@ -51,16 +62,9 @@ namespace ExamStorm.DataManager.Repositories
             return result;
         }
 
-        public async Task<T> AddAsync(T model)
+        public virtual async Task<T> AddAsync(T model)
         {
             await dbSet.AddAsync(model);
-            await dbContext.SaveChangesAsync();
-            return model;
-        }
-
-        public virtual async Task<T> UpdateAsync(T model)
-        {
-            dbSet.Update(model);
             await dbContext.SaveChangesAsync();
             return model;
         }

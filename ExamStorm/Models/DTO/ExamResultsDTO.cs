@@ -2,7 +2,7 @@
 
 namespace ExamStorm.Models.DTO
 {
-    public class ExamResultsDTO
+    public class ExamSummaryDTO
     {
         public string ExamId { get; set; }
         public Dictionary<string, string> QuestionIdToAnswerIdMap { get; set; }

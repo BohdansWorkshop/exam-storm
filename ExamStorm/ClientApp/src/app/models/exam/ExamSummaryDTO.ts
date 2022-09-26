@@ -1,4 +1,4 @@
-﻿export class ExamResultsDTO {
+﻿export class ExamSummaryDTO {
     ExamId: string;
     QuestionIdToAnswerIdMap: Map<string, string>;
 

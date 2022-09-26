@@ -9,6 +9,8 @@ using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
 using System.Threading.Tasks;
 using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ExamStorm.Controllers
 {
@@ -17,12 +19,14 @@ namespace ExamStorm.Controllers
     public class AccountController : Controller
     {
         private readonly IBaseRepository<UserModel> _userModelRepository;
+        private readonly IBaseRepository<ExamResultModel> _examResultModelRepository;
         private readonly IJwtAuthManager _jwtAuthManager;
         private readonly IMapper _mapper;
 
         public AccountController(ExamDbContext dbContext, IJwtAuthManager jwtAuthManager, IMapper mapper)
         {
             _userModelRepository = new RepositoryProvider(dbContext).GetUserRepository;
+            _examResultModelRepository = new RepositoryProvider(dbContext).GetExamResultRepository;
             _jwtAuthManager = jwtAuthManager;
             _mapper = mapper;
         }
@@ -30,7 +34,7 @@ namespace ExamStorm.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginInfoDTO request)
         {
-            var existingUser = await _userModelRepository.GetOneWhere(x=> x.Email == request.Email);
+            var existingUser = await _userModelRepository.GetOneWhereAsync(x=> x.Email == request.Email);
             if(existingUser == null)
             {
                 return BadRequest("Wrong username or password");
@@ -45,8 +49,9 @@ namespace ExamStorm.Controllers
 
             var claims = new[]
            {
-                new Claim(ClaimTypes.Name,existingUser.Email),
-                new Claim(ClaimTypes.Role, "testRole")
+                new Claim("Id", existingUser.Id.ToString()),
+                new Claim(ClaimTypes.Email,existingUser.Email),
+                new Claim(ClaimTypes.Role, existingUser.Role.ToString())
             };
 
             var existingUserDTO = _mapper.Map<UserModelDTO>(existingUser);
@@ -62,7 +67,7 @@ namespace ExamStorm.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserModel userModel)
         {
-            var existingUser = await _userModelRepository.GetOneWhere(x => x.Email == userModel.Email);
+            var existingUser = await _userModelRepository.GetOneWhereAsync(x => x.Email == userModel.Email);
             if (existingUser != null)
             {
                 return BadRequest("User with this email is already registered");
@@ -74,9 +79,8 @@ namespace ExamStorm.Controllers
             return Ok(resultDTO);
         }
 
-        [Authorize]
         [HttpPost("logout")]
-        public async Task<ActionResult> Logout()
+        public IActionResult Logout()
         {
             // optionally "revoke" JWT token on the server side --> add the current token to a block-list
             // https://github.com/auth0/node-jsonwebtoken/issues/375
@@ -84,6 +88,17 @@ namespace ExamStorm.Controllers
             var userName = User.Identity?.Name;
             _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("examResults")]
+        public async Task<IActionResult> GetExamResults()
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "Id").Value.ToString());
+            var examResultsForCurrentUser = await _examResultModelRepository.GetWhereAsync(x => x.User.Id == userId);
+            var examResultsDTO = new List<UserExamsResultsDTO>();
+            examResultsForCurrentUser.ForEach(x => examResultsDTO.Add(_mapper.Map<UserExamsResultsDTO>(x)));
+            return Ok(examResultsDTO);
         }
 
     }

@@ -2,7 +2,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ExamModel } from "../models/exam/ExamModel";
-import { ExamResultsDTO } from "../models/exam/ExamResultsDTO";
+import { ExamSummaryDTO } from "../models/exam/ExamSummaryDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ export class ExamService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                //Authorization: 'my-auth-token'
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
             })
         };
 
@@ -32,7 +32,7 @@ export class ExamService {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                //Authorization: 'my-auth-token'
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
             })
         };
         const updateRequestUrl = `${this.ExamControllerURL}/update`;
@@ -44,10 +44,11 @@ export class ExamService {
         return this.httpClient.delete<boolean>(removeRequestUrl);
     }
 
-    checkExamAnswers(examResults: ExamResultsDTO): Observable<any> {
+    checkExamAnswers(examResults: ExamSummaryDTO): Observable<any> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
             })
         };
 

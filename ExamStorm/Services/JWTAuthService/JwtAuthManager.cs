@@ -109,7 +109,7 @@ namespace ExamStorm.Services.JWTAuthService
                         ValidAudience = _jwtTokenConfig.Audience,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromMinutes(1)
+                        ClockSkew = TimeSpan.FromMinutes(10)
                     },
                     out var validatedToken);
             return (principal, validatedToken as JwtSecurityToken);

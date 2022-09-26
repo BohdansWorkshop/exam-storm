@@ -2,6 +2,7 @@
 import { Injectable } from "@angular/core";
 import { LoginModel } from "../models/auth/LoginModel";
 import { UserAuthInfoModel } from "../models/auth/UserAuthInfoModel";
+import { UserExamResults } from "../models/UserExamResults";
 
 @Injectable({
     providedIn: 'root'
@@ -31,5 +32,15 @@ export class AccountService {
         };
         const logoutRequestUrl = `${this.AccountControllerURL}/logout`;
         return this.httpClient.post(logoutRequestUrl, null, httpOptions);
+    }
+
+    getExamResults() {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+            })
+        };
+        const logoutRequestUrl = `${this.AccountControllerURL}/examResults`;
+        return this.httpClient.get<UserExamResults[]>(logoutRequestUrl, httpOptions);
     }
 }

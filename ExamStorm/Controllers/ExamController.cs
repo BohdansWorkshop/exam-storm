@@ -1,29 +1,37 @@
 ﻿using ExamStorm.DataManager;
 using ExamStorm.DataManager.Interfaces;
+using ExamStorm.DataManager.Models;
 using ExamStorm.DataManager.Models.Exam;
 using ExamStorm.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ExamStorm.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ExamController : ControllerBase
     {
         private readonly IBaseRepository<ExamModel> _examModelRepository;
+        private readonly IBaseRepository<UserModel> _userModelRepository;
         private readonly IBaseRepository<QuestionModel> _questionModelRepository;
         private readonly IBaseRepository<AnswerModel> _answerModelRepository;
+        private readonly IBaseRepository<ExamResultModel> _examResultModelRepository;
 
         public ExamController(ExamDbContext dbContext)
         {
             var repoProvider = new RepositoryProvider(dbContext);
+            _userModelRepository = repoProvider.GetUserRepository;
             _examModelRepository = repoProvider.GetExamRepository;
             _questionModelRepository = repoProvider.GetQuestionsRepository;
             _answerModelRepository = repoProvider.GetAnswerRepository;
+            _examResultModelRepository = repoProvider.GetExamResultRepository;
         }
 
         [HttpGet]
@@ -70,16 +78,26 @@ namespace ExamStorm.Controllers
         }
 
         [HttpPost("CheckAnswers")]
-        public async Task<ActionResult<Dictionary<string, bool>>> CheckAnswers(ExamResultsDTO examResults)
+        public async Task<ActionResult<Dictionary<string, bool>>> CheckAnswers(ExamSummaryDTO examResults)
         {
             IDictionary<string, bool> questionIdToResultMap = new Dictionary<string, bool>();
             var currentExam = await _examModelRepository.GetByIdAsync(Guid.Parse(examResults.ExamId));
+            int correctAnswers = 0;
             foreach (var questIdAnsId in examResults.QuestionIdToAnswerIdMap)
             {
                 var currentQuestion = currentExam.Questions.FirstOrDefault(q => q.Id == Guid.Parse(questIdAnsId.Key));
                 var currentAnswer = currentQuestion.Answers.FirstOrDefault(a => a.Id == Guid.Parse(questIdAnsId.Value));
+
+                if (currentAnswer.IsCorrect)
+                {
+                    correctAnswers++;
+                }
+
                 questionIdToResultMap.Add(questIdAnsId.Key, currentAnswer.IsCorrect);
             }
+
+            await CreateAndSaveExamResult(currentExam, correctAnswers);
+
             return Ok(questionIdToResultMap);
         }
 
@@ -103,6 +121,22 @@ namespace ExamStorm.Controllers
                 return Ok(isRemovedSucessfuly);
             }
             return NotFound();
+        }
+        private async Task CreateAndSaveExamResult(ExamModel currentExam, int correctAnswers)
+        {
+            var examResult = await CreateAndGetExamResultModel(currentExam, correctAnswers);
+            await _examResultModelRepository.AddAsync(examResult);
+        }
+
+        private async Task<ExamResultModel> CreateAndGetExamResultModel(ExamModel currentExam, int correctAnswers)
+        {
+            var currentUserEmail = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            var currentUserModel = await _userModelRepository.GetOneWhereAsync(x => x.Email == currentUserEmail);
+            var examResult = new ExamResultModel();
+            examResult.Exam = currentExam;
+            examResult.User = currentUserModel;
+            examResult.CorrectAnswersAmount = correctAnswers;
+            return examResult;
         }
     }
 }

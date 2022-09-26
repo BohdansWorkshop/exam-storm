@@ -12,6 +12,14 @@ namespace ExamStorm.DataManager
         public DbSet<ExamModel> Exams { get; set; }
         public DbSet<AnswerModel> Answers { get; set; }
         public DbSet<QuestionModel> Questions { get; set; }
+        public DbSet<ExamResultModel> ExamResults { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UserModel>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+        }
 
     }
 }
