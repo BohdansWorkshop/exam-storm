@@ -52,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\models\auth\RegisterModel.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\models\auth\UserAuthInfoModel.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\models\exam\ExamSummaryDTO.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\services\exam.service.ts" />

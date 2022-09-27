@@ -1,6 +1,7 @@
 
 <div class="container">
-    <h3>{{exam.title}}: <span *ngIf="!this.isFinishedTest">{{timeLeft}}</span></h3>
+    <h3>{{exam.title}}</h3>
+    <span *ngIf="!this.isFinishedTest"> time left: {{timeLeft}}</span>
 </div>
 
 <mat-card class="container" *ngIf="!isFinishedTest else resultsTemplate">
@@ -9,8 +10,9 @@
             <h3>{{questions[curQuestionIdx].question}}:</h3>
             <li *ngFor="let answer of questions[curQuestionIdx].answers">
                 <span class="choice-container">
-                    <input type="radio" name="answer" (click)="setAnswer(answer);" />
-                    <span>{{answer.description}}</span>
+                    <mat-radio-button color="primary" (click)="setAnswer(answer)">
+                        <span i18n>{{answer.description}}</span>
+                    </mat-radio-button>
                 </span>
             </li>
         </mat-card-content>

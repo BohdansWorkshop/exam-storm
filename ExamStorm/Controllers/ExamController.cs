@@ -3,7 +3,6 @@ using ExamStorm.DataManager.Interfaces;
 using ExamStorm.DataManager.Models;
 using ExamStorm.DataManager.Models.Exam;
 using ExamStorm.Models.DTO;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace ExamStorm.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ExamController : ControllerBase
@@ -96,7 +94,10 @@ namespace ExamStorm.Controllers
                 questionIdToResultMap.Add(questIdAnsId.Key, currentAnswer.IsCorrect);
             }
 
-            await CreateAndSaveExamResult(currentExam, correctAnswers);
+            if (User.Identity.IsAuthenticated)
+            {
+                await CreateAndSaveExamResult(currentExam, correctAnswers);
+            }
 
             return Ok(questionIdToResultMap);
         }
@@ -110,9 +111,9 @@ namespace ExamStorm.Controllers
             {
                 foreach (var answer in question.Answers)
                 {
-                    _answerModelRepository.RemoveAsync(answer);
+                    await _answerModelRepository.RemoveAsync(answer);
                 }
-                _questionModelRepository.RemoveAsync(question);
+                await _questionModelRepository.RemoveAsync(question);
             }
 
             var isRemovedSucessfuly = await _examModelRepository.RemoveAsync(exam);

@@ -1,10 +1,18 @@
 <mat-list *ngIf="startedExam==null else questionsTemplate">
+    <h3> Exam Browser</h3>
     <mat-card class="exam-card" *ngFor="let exam of exams">
         <mat-card-title>{{exam.title}}</mat-card-title>
         <mat-card-content>
             {{exam.description}} - {{exam.questions.length}} questions
         </mat-card-content>
-        <button mat-button color="primary" (click)="startExam(exam)">Start</button>
+        <button type="button"
+                mat-raised-button
+                disableRipple="true"
+                name="start quiz"
+                class="btn btn-outline-primary"
+                (click)="startExam(exam)">
+            <span i18n><strong>Start!</strong>&nbsp;<mat-icon inline="true">play_arrow</mat-icon></span>
+        </button>
     </mat-card>
 </mat-list>
 

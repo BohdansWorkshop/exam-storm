@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { CounterComponent } from './counter/counter.component';
 import { UserService } from './services/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule, MatRadioModule, MatTabsModule } from '@angular/material';
 import { ExamService } from './services/exam.service';
 import { AccountService } from './services/account.service';
 import { ExaminationComponent } from './components/examination/examination.component';
@@ -53,6 +53,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
         MatButtonModule,
         MatInputModule,
         MatCardModule,
+        MatRadioModule,
+        MatDividerModule,
         MatListModule,
         BrowserAnimationsModule,
         MatProgressSpinnerModule,

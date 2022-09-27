@@ -1,10 +1,24 @@
 <h1> Hello {{currentUser.firstName}} {{currentUser.lastName}} </h1>
 
-<button mat-raised-button color="primary" (click)="logout()">Logout</button>
+<h3> Your Exams History: </h3>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Exam</th>
+                <th scope="col">Questions</th>
+                <th scope="col">Right Answers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let res of examResults">
+                <td>{{res.examDescription}}</td>
+                <td>{{res.questionsAmount}}</td>
+                <td>{{res.correctAnswersAmount}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <mat-divider></mat-divider>
+</div>
 
-<mat-list>
-    <div *ngFor="let res of examResults">
-        <mat-list-item> {{res.examDescription}} </mat-list-item>
-        <mat-list-item> {{res.correctAnswersAmount}}/{{res.questionsAmount}} </mat-list-item>
-    </div>
-</mat-list>
+<button mat-raised-button color="primary" (click)="logout()">Logout</button>

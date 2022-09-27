@@ -74,9 +74,8 @@ namespace ExamStorm.Controllers
             }
 
             userModel.Password = BCrypt.Net.BCrypt.HashPassword(userModel.Password);
-            var newUser = await _userModelRepository.AddAsync(userModel);
-            var resultDTO = _mapper.Map<UserModelDTO>(newUser);
-            return Ok(resultDTO);
+            await _userModelRepository.AddAsync(userModel);
+            return Ok();
         }
 
         [HttpPost("logout")]

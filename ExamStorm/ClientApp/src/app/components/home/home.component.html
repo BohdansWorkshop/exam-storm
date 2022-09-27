@@ -13,24 +13,74 @@
         width: 100%;
     }
 </style>
-<div class="signin-content">
+
+<div class="signin-content" *ngIf="!isRegisterMode">
     <mat-card>
         <mat-card-content>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <p>Please login to continue</p>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <h3>Login</h3>
                 <mat-form-field class="full-width-input">
-                    <input matInput placeholder="User" formControlName="userName" required>
-                    <mat-error *ngIf="isFieldInvalid('userName')">
-                        Please inform your user name
+                    <input matInput placeholder="Email" formControlName="email" required>
+                    <mat-error *ngIf="isLoginFieldValid('email')">
+                        Please type your user name
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="full-width-input">
                     <input matInput type="password" placeholder="Password" formControlName="password" required>
-                    <mat-error *ngIf="isFieldInvalid('userName')">
-                        Please inform your password
+                    <mat-error *ngIf="isLoginFieldValid('password')">
+                        Please type your password
                     </mat-error>
                 </mat-form-field>
-                <button mat-raised-button color="primary" type="submit">Login</button>
+                <button mat-raised-button color="primary" type="submit" style="margin-right:10px">Login</button>
+                <button mat-raised-button color="primary" (click)="registerMode()">Register</button>
+            </form>
+            <mat-error *ngIf="error != null">
+                {{error}}
+            </mat-error>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div *ngIf="isRegisterMode">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                <h3>Register new user</h3>
+                <mat-form-field class="full-width-input">
+                    <input matInput placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+                    <mat-error *ngIf="isRegisterFieldValid('email')">
+                        Please type your email
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width-input">
+                    <input matInput placeholder="First Name" formControlName="fName" required>
+                    <mat-error *ngIf="isRegisterFieldValid('fName')">
+                        Please type your First Name
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width-input">
+                    <input matInput placeholder="Last Name" formControlName="lName" required>
+                    <mat-error *ngIf="isRegisterFieldValid('lName')">
+                        Please type your Last Name
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width-input">
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                    <mat-error *ngIf="isRegisterFieldValid('password')">
+                        Please type your password
+                    </mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="error != null">
+                    {{error}}
+                </mat-error>
+
+                <hr>
+                <div class="socialMediaFlex">
+                    <button color="primary" [disabled]="registerForm.invalid" type="submit" mat-raised-button>Register</button>
+                </div>
             </form>
         </mat-card-content>
     </mat-card>
